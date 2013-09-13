@@ -55,7 +55,11 @@ module.exports = function(grunt) {
         });
       }, function() {
         if (compiled.length < 1) {
-          grunt.log.warn('Destination not written because compiled files were empty.');
+          if(grunt.option("ignoreEmpty")) {
+            grunt.log.writeln('Nothing created.');
+          } else {
+            grunt.log.warn('Destination not written because compiled files were empty.');
+          }
         } else {
           grunt.file.write(destFile, banner + compiled.join(grunt.util.normalizelf(grunt.util.linefeed)));
           grunt.log.writeln('File ' + destFile.cyan + ' created.');
